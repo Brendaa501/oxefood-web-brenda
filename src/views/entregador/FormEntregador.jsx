@@ -2,15 +2,54 @@ import InputMask from 'comigo-tech-react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import React, { useState } from "react";
 import MenuSistema from '../../MenuSistema';
+import axios from 'axios';
 
-export default function FormCliente () {
-    
-    const [selectedValue, setSelectedValue] = useState('option1');
+export default function FormEntregador () {
+   const [nome, setNome]=useState();
+   const [cpf, setCpf]=useState();
+   const [rg, setRg]=useState();
+  const [dataNascimento, setDataNascimento]=useState();
+   const [foneCelular, setFoneCelular]=useState();
+  const [foneFixo, setFoneFixo]=useState();
+    const [qtdEntregas, setQtdEntregas]=useState();
+ const [valorFrete, setValorFrete]=useState();
+  const [rua, setRua]=useState();
+   const [numero, setNumero]=useState();
+    const [bairro, setBairro]=useState();
+     const [cidade, setCidade]=useState();
+      const [cep, setCep]=useState();
+      const [uf, setUf]=useState();
+      const [complemento, setComplemento]=useState();
+        const [ativo, setAtivo]=useState();
 
-const handleChange = (e) => {
-  setSelectedValue(e.target.value);
-};
+function salvar() {
 
+		let entregadorRequest = {
+		     nome,
+		     cpf,
+             rg,
+		     dataNascimento,
+		     foneCelular,
+		     foneFixo,
+             qtdEntregas: qtdEntregas ? Number(qtdEntregas) : 0,
+    valorFrete: valorFrete ? Number(valorFrete) : 0,
+             rua,
+             numero,
+             bairro,
+             cidade,
+             cep,
+             uf,
+             complemento
+		};
+	
+		axios.post("http://localhost:8080/api/entregador", entregadorRequest)
+		.then((response) => {
+		     console.log('Entregador cadastrado com sucesso.')
+		})
+		.catch((error) => {
+		     console.log('Erro ao incluir o um entregador.')
+		});
+	}
 
     return (
 
@@ -37,6 +76,8 @@ const handleChange = (e) => {
                                     label='Nome'
                                     maxLength="100"
                                     width={15}
+                                    value={nome}
+			                        onChange={e => setNome(e.target.value)}
                                 />
 
                                 <Form.Input
@@ -47,16 +88,20 @@ const handleChange = (e) => {
                                     <InputMask
                                         required
                                         mask="999.999.999-99"
+                                        value={cpf}
+				                        onChange={e => setCpf(e.target.value)}
                                     /> 
                                 </Form.Input>
 
                                 <Form.Input
                                     fluid
-                                    label='RG'
+                                    label='rg'
                                     width={8}>
                                     <InputMask
                                         required
                                         mask="99.999.999-9"
+                                        value={rg}
+				                        onChange={e => setRg(e.target.value)}
                                     /> 
                                 </Form.Input>
                             </Form.Group>
@@ -68,7 +113,9 @@ const handleChange = (e) => {
                                     fluid
                                     label='DT nascimento'
                                     width={5}
-                                    placeholder="Ex: 20/03/1985">
+                                    placeholder="Ex: 20/03/1985"
+                                    value={dataNascimento}
+				                    onChange={e => setDataNascimento(e.target.value)}>
                                     
                                 </Form.Input>
 
@@ -79,6 +126,8 @@ const handleChange = (e) => {
                                     width={7}>
                                     <InputMask 
                                         mask="(99) 9999.9999"
+                                        value={foneCelular}
+				                        onChange={e => setFoneCelular(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -88,22 +137,30 @@ const handleChange = (e) => {
                                     width={7}>
                                     <InputMask 
                                         mask="(99) 9999.9999"
+                                        value={foneFixo}
+				                        onChange={e => setFoneFixo(e.target.value)}
                                     /> 
                                 </Form.Input>
 
                                 <Form.Input
+                                type="number"
                                     fluid
                                     label='QTD entregas realizadas'
                                     width={5}
+                                    value={qtdEntregas}
+				                        onChange={e => setQtdEntregas(e.target.value)}
                                 >
                                     
                                 </Form.Input>
 
 
                                 <Form.Input
+                                type="number"
                                     fluid
                                     label='Valor por frete'
                                     width={5}
+                                    value={valorFrete}
+				                        onChange={e => setValorFrete(e.target.value)}
                                 >
                                     
                                 </Form.Input>
@@ -116,6 +173,8 @@ const handleChange = (e) => {
                                     fluid
                                     label='Rua'
                                     width={15}
+                                    value={rua}
+				                        onChange={e => setRua(e.target.value)}
                                     >
                                     
                                 </Form.Input>
@@ -124,6 +183,8 @@ const handleChange = (e) => {
                                     fluid
                                     label='Número'
                                     width={5}
+                                    value={numero}
+				                        onChange={e => setNumero(e.target.value)}
                                     >
                                     
                                 </Form.Input>
@@ -136,6 +197,8 @@ const handleChange = (e) => {
                                         fluid
                                         label='Bairro'
                                         width={10}
+                                        value={bairro}
+				                        onChange={e => setBairro(e.target.value)}
                                         >
                                         
                                     </Form.Input>
@@ -144,6 +207,8 @@ const handleChange = (e) => {
                                         fluid
                                         label='Cidade'
                                         width={10}
+                                        value={cidade}
+				                        onChange={e => setCidade(e.target.value)}
                                         >
                                         
                                     </Form.Input>
@@ -152,13 +217,16 @@ const handleChange = (e) => {
                                         fluid
                                         label='CEP'
                                         width={5}
+                                        value={cep}
+				                        onChange={e => setCep(e.target.value)}
                                         >
                                         
                                     </Form.Input>
                                     </Form.Group>
 
                                     <Form.Group>
-        <Form.Field width={16}   placeholder="Ex: 20/03/1985" >
+        <Form.Field width={16}   placeholder="Ex: 20/03/1985"  value={uf}
+				                        onChange={e => setUf(e.target.value)} >
           <label>UF</label>
           <select name="uf">
             <option value="">Selecione </option>
@@ -200,40 +268,33 @@ const handleChange = (e) => {
       <Form.Input
               fluid
               label='Complemento'
-              width={16} >
+              width={16} 
+              value={complemento}
+			onChange={e => setComplemento(e.target.value)}>
                                         
    </Form.Input>
 
       </Form.Group>
 
   
-  <Form.Field>
-  <label>Ativo:</label>
-
-  <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-    <label>
-      <input
-        type="radio"
-        name="optionGroup"
-        value="option1"
-        checked={selectedValue === 'option1'}
-        onChange={handleChange}
-      />
-      Sim
-    </label>
-
-    <label>
-      <input
-        type="radio"
-        name="optionGroup"
-        value="option2"
-        checked={selectedValue === 'option2'}
-        onChange={handleChange}
-      />
-      Não
-    </label>
-  </div>
-</Form.Field>
+ <Form.Group>
+                                <label style={{ marginRight: '10px', fontWeight: 'bold' }}>Ativo:</label>
+                                <Form.Radio
+                                    label='Sim'
+                                    name='ativo'
+                                    value="S"
+                                    checked={ativo === "S"}
+                                    onChange={() => setAtivo("S")}
+                                 />
+                             <Form.Radio
+                                label='Não'
+                                name='ativo'
+                                value="N"
+                                checked={ativo === "N"}
+                                onChange={() => setAtivo("N")}
+                             />
+                        </Form.Group>
+  
 
 
 
@@ -260,6 +321,7 @@ const handleChange = (e) => {
                                 labelPosition='left'
                                 color='blue'
                                 floated='right'
+                                 onClick={() => salvar()}
                             >
                                 <Icon name='save' />
                                 Salvar
