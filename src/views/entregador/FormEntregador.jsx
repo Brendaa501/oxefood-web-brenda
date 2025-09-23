@@ -1,6 +1,7 @@
 import InputMask from 'comigo-tech-react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import React, { useState } from "react";
+import MenuSistema from '../../MenuSistema';
 
 export default function FormCliente () {
     
@@ -14,6 +15,7 @@ const handleChange = (e) => {
     return (
 
         <div>
+            <MenuSistema tela={'entregador'} />
 
             <div style={{marginTop: '3%'}}>
 
