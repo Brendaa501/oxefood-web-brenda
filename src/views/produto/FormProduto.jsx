@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 
 export default function FormProduto () {
@@ -132,6 +133,8 @@ function salvar() {
                         </Form>
                         
                         <div style={{marginTop: '4%'}}>
+                        
+                        <Link to={'/list-produto'}>
 
                             <Button
                                 type="button"
@@ -144,7 +147,7 @@ function salvar() {
                                 <Icon name='reply' />
                                 Voltar
                             </Button>
-                                
+                                </Link>
                             <Button
                                 inverted
                                 circular
