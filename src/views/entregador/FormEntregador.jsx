@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import MenuSistema from '../../MenuSistema';
 import axios from 'axios';
 import { Link, useLocation  } from "react-router-dom";
+import { notifyError, notifySuccess } from '../../views/util/Util';
 
 export default function FormEntregador () {
    const [nome, setNome]=useState();
@@ -82,9 +83,21 @@ function salvar() {
 	
 		 if (idEntregador != null) { //Alteração:
            axios.put("http://localhost:8080/api/entregador/" + idEntregador, entregadorRequest)
-           .then((response) => { console.log('Entregador alterado com sucesso.') })
-           .catch((error) => { console.log('Erro ao alter um entregador.') })
-       } else { //Cadastro:
+           .then((response) =>  {
+notifySuccess('Cliente cadastrado com sucesso.')
+})
+
+           .catch((error) => {
+if (error.response.data.errors != undefined) {
+       		for (let i = 0; i < error.response.data.errors.length; i++) {
+	       		notifyError(error.response.data.errors[i].defaultMessage)
+	    	}
+	} else {
+		notifyError(error.response.data.message)
+	}
+           })
+       }
+        else { //Cadastro:
            axios.post("http://localhost:8080/api/entregador", entregadorRequest)
            .then((response) => { console.log('Entregador cadastrado com sucesso.') })
            .catch((error) => { console.log('Erro ao incluir o entregador.') })
